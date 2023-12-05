@@ -8,42 +8,34 @@ export const PanelManagerNews = (): ReactElement => {
   const [openDelete, setOpenDelete] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [form] = Form.useForm();
-  const { control, handleSubmit, register, getValues } = useForm();
+  const { control, getValues, reset } = useForm();
 
   const showModal = (func: Function) => {
     func(true);
+    reset()
   };
 
   const handleCancel = (func: Function) => {
     func(false);
+    reset()
   };
 
-  const handleOk = (handler: Function, fnClose: Function) => {
-    setLoading(true);
-    handler();
-    setTimeout(() => {
-      setLoading(false);
-      fnClose(false);
-    }, 3000);
-  };
-
-  const handleAdd = (data) => {
+  const handleAdd = () => {
     const values = getValues();
     console.log(values);
+    handleCancel(setOpenAdd);
   };
 
   const handleUpdate = () => {
-    console.log('handleUpdate');
+    const values = getValues();
+    console.log(values);
+    handleCancel(setOpenUpdate);
   };
 
   const handleDelete = () => {
-    console.log('handleDelete');
-  };
-
-  const handleFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    const values = getValues();
+    console.log(values);
+    handleCancel(setOpenDelete);
   };
 
   return (
@@ -70,12 +62,7 @@ export const PanelManagerNews = (): ReactElement => {
           <Button key="back" onClick={() => handleCancel(setOpenAdd)}>
             Закрыть
           </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={handleAdd}
-          >
+          <Button key="submit" type="primary" onClick={handleAdd}>
             Сохранить
           </Button>
         ]}
@@ -112,10 +99,9 @@ export const PanelManagerNews = (): ReactElement => {
         </Form>
       </Modal>
 
-      {/* <Modal
+      <Modal
         open={openUpdate}
         title="Обновлене новости"
-        onOk={() => handleOk(handleUpdate, setOpenUpdate)}
         onCancel={() => handleCancel(setOpenUpdate)}
         footer={[
           <Button key="back" onClick={() => handleCancel(setOpenUpdate)}>
@@ -124,38 +110,88 @@ export const PanelManagerNews = (): ReactElement => {
           <Button
             key="submit"
             type="primary"
-            loading={loading}
-            onClick={() => handleOk(handleUpdate, setOpenUpdate)}
+            onClick={handleUpdate}
           >
             Обновить
           </Button>
         ]}
       >
-        <Input placeholder="Название статьи" />
-        <Input placeholder="Описание статьи" />
+        <Form>
+          <Form.Item name="id" style={{ marginBottom: 2, width: '100%' }}>
+            <Controller
+              name="id"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  width={'100%'}
+                  placeholder="Номер статьи"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Form.Item>
+          <Form.Item name="title" style={{ marginBottom: 2, width: '100%' }}>
+            <Controller
+              name="title"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  width={'100%'}
+                  placeholder="Заголовок новости"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Form.Item>
+          <Form.Item name="text" style={{ marginBottom: 2, width: '100%' }}>
+            <Controller
+              name="text"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  width={'100%'}
+                  placeholder="текст новости"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Form.Item>
+        </Form>
       </Modal>
 
       <Modal
         open={openDelete}
         title="Удаление новости"
-        onOk={() => handleOk(handleDelete, setOpenDelete)}
         onCancel={() => handleCancel(setOpenDelete)}
         footer={[
           <Button key="back" onClick={() => handleCancel(setOpenDelete)}>
             Закрыть
           </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={() => handleOk(handleDelete, setOpenDelete)}
-          >
+          <Button key="submit" type="primary" onClick={handleDelete}>
             Удалить
           </Button>
         ]}
       >
-        <Input placeholder="Номер статьи" />
-      </Modal> */}
+        <Form>
+          <Form.Item name="id" style={{ marginBottom: 2, width: '100%' }}>
+            <Controller
+              name="id"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  width={'100%'}
+                  placeholder="Номер статьи"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 };

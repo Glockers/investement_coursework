@@ -3,5 +3,6 @@ export enum EAppRoutes {
   PROFILE = '/profile',
   PORTFOLIO = '/portfolio',
   INVESTMENT = '/investment',
-  LOGIN = '/login'
+  LOGIN = '/login',
+  SIGN_UP = '/sign_up'
 }

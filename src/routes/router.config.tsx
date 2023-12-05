@@ -7,6 +7,7 @@ import { Insvestment } from "../pages/Investement/Investment";
 import { Portfolio } from "../pages/Portfolio/Portfolio";
 import { Profile } from "../pages/Profile/Profile";
 import { Login } from '../pages/Login/Login';
+import { Signup } from "../pages/Signup/Signup";
 
 export interface IRoute {
   element: ReactElement;
@@ -35,6 +36,11 @@ export const routes: TRoutes = {
     element: <Login />,
     permissions: [],
   },
+  [EAppRoutes.SIGN_UP]: {
+    element: <Signup />,
+    permissions: [],
+  }
+  ,
   "*": {
     element: <NotFound />,
     permissions: [],

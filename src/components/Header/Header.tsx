@@ -14,7 +14,6 @@ import {
 import { useAuthContext } from '../../mock/authContext';
 import logo from '../../assets/default-avatar.png';
 
-
 export const AppHeader = (): ReactElement => {
   const { isAuthorized, user, logout } = useAuthContext();
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ export const AppHeader = (): ReactElement => {
                 <Name>{user?.firstName}</Name>
                 <Avatar
                   src={logo}
-                  alt=""
+                  alt="User profile"
                   onClick={() => navigate(EAppRoutes.PROFILE)}
                 />
               </UserContainerInfo>
